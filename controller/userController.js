@@ -74,3 +74,28 @@ export const deleteBook = async(req, res)=>{
     }
     
 }
+
+export const searchByBookName = async (req, res) => {
+    try {
+        const { bookName } = req.query;
+
+        if (!bookName) {
+            return res.status(400).json({ message: "bookName query is required." });
+        }
+
+        // case-insensitive search (partial match also works)
+        const books = await Books.find({
+            bookName: { $regex: bookName, $options: "i" }
+        });
+
+        if (books.length === 0) {
+            return res.status(404).json({ message: "No books found." });
+        }
+
+        res.status(200).json(books);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Internal server error." });
+    }
+};
