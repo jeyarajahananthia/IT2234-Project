@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { addBook } from "../services/api";
+import { useEffect, useState } from "react";
 
-function BookForm({ refreshBooks }) {
+import { addBook, updateBook } from "../services/api";
+
+function BookForm({ refreshBooks, editingBook, setEditingBook }) {
+
   const [book, setBook] = useState({
     bookName: "",
     author: "",
@@ -11,17 +13,42 @@ function BookForm({ refreshBooks }) {
     contactEmail: "",
   });
 
+  useEffect(() => {
+
+    if (editingBook) {
+      setBook(editingBook);
+    }
+
+  }, [editingBook]);
+
   const handleChange = (e) => {
-    setBook({ ...book, [e.target.name]: e.target.value });
+
+    setBook({
+      ...book,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
 
     try {
-      await addBook(book);
 
-      alert("Book Added Successfully");
+      if (editingBook) {
+
+        await updateBook(editingBook._id, book);
+
+        alert("Book Updated Successfully");
+
+        setEditingBook(null);
+
+      } else {
+
+        await addBook(book);
+
+        alert("Book Added Successfully");
+      }
 
       setBook({
         bookName: "",
@@ -33,14 +60,19 @@ function BookForm({ refreshBooks }) {
       });
 
       refreshBooks();
+
     } catch (error) {
+
       console.log(error);
-      alert("Error adding book");
+
+      alert("Error");
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="form">
+
+    <form className="form" onSubmit={handleSubmit}>
+
       <input
         type="text"
         name="bookName"
@@ -95,7 +127,12 @@ function BookForm({ refreshBooks }) {
         required
       />
 
-      <button type="submit">Add Book</button>
+      <button type="submit">
+
+        {editingBook ? "Update Book" : "Add Book"}
+
+      </button>
+
     </form>
   );
 }

@@ -8,7 +8,9 @@ import SearchBar from "../components/SearchBar";
 import { getBooks } from "../services/api";
 
 function Home() {
+
   const [books, setBooks] = useState([]);
+  const [editingBook, setEditingBook] = useState(null);
 
   const fetchBooks = async () => {
     try {
@@ -25,14 +27,27 @@ function Home() {
 
   return (
     <div>
+
       <Navbar />
 
       <div className="container">
-        <BookForm refreshBooks={fetchBooks} />
-         <SearchBar setBooks={setBooks} />
 
-        <BookList books={books} refreshBooks={fetchBooks} />
+        <BookForm
+          refreshBooks={fetchBooks}
+          editingBook={editingBook}
+          setEditingBook={setEditingBook}
+        />
+
+        <SearchBar setBooks={setBooks} />
+
+        <BookList
+          books={books}
+          refreshBooks={fetchBooks}
+          setEditingBook={setEditingBook}
+        />
+
       </div>
+
     </div>
   );
 }
