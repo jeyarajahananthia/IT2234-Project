@@ -29,7 +29,6 @@ const BookSchema = new mongoose.Schema({
     contactEmail: {
         type : String,
         required : true,
-        unique : true,
     }
 });
 
