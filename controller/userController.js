@@ -1,22 +1,24 @@
 import Books from "../model/userModel.js";
 
-export const create =  async(req,res) => {
-    try{
+export const create = async (req, res) => {
+    try {
+
         const bookData = new Books(req.body);
-        const {bookName} = bookData;
-
-        const bookExist = await Books.findOne({bookName});
-
-        if(bookExist){
-            return res.status(400).json({message : "Book already exist."});
-        }
 
         const saveBook = await bookData.save();
 
-        res.status(200).json(saveBook)
-    }catch(error){
+        res.status(201).json({
+            message: "Book added successfully",
+            book: saveBook
+        });
+
+    } catch (error) {
+
         console.log(error);
-        res.status(500).json({error:error.message});
+
+        res.status(500).json({
+            error: error.message
+        });
     }
 }
 
