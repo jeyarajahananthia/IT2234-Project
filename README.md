@@ -10,6 +10,8 @@ Proposed Solution:
         The Book Exchange Platform is a MERN stack web application that allows users to manage second-hand book listings efficiently. Users can add books with details such as title, author, condition, and price, view all available books, update existing listings, and delete books when they are no longer available.The system provides a user-friendly interface connected to a backend API and MongoDB database for storing book information.
 
 Features:
+        Register new user
+        login user
         Add new book listings
         View all available books
         Update existing book details
