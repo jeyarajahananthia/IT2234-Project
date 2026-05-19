@@ -35,7 +35,46 @@ Technologies used:
             Postman
             Git & GitHub
 
-Api EndPoints: 
+Api EndPoints:
+        Register User: 
+            POST /api/users/register
+
+            Request: http://localhost:8000/api/users/register
+            Request body:
+                {
+                    "name" : "Ananthia",
+                    "email" : "ana123@gmail.com",
+                    "password" : "123456"
+                }
+            Response:
+                {
+                    "message": "User registered successfully",
+                     "user": {
+                         "name": "Sineha",
+                         "email": "sineha2003@gmail.com",
+                         "password": "$2b$10$0qFMbgMRmzE0jSFmLrPq5.hkysNpx1xfJ1ZxF6Z2jtQJj0FjQKDX.",
+                         "_id": "6a0c70d24759a3e76c329064",
+                         "__v": 0
+                            }
+                }
+
+        Login: 
+            Request:http://localhost:8000/api/users/login
+            Headers=>
+            Authentication : "long token"
+
+            Response:
+                {
+                    "message": "Login successful",
+                    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhMGM3MGQyNDc1OWEzZTc2YzMyOTA2NCIsImlhdCI6MTc3OTIwMDMxNCwiZXhwIjoxNzc5Mjg2NzE0fQ.t4BXbeQpxQqRmhL3sAue7TSasWO4IGCV0HywjFx9Y5c",
+                    "user": {
+                            "id": "6a0c70d24759a3e76c329064",
+                             "name": "Sineha",
+                             "email": "sineha2003@gmail.com"
+                         }
+                }
+
+
         View Book:
             GET /api/Books/getallbooks
 
