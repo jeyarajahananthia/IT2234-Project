@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 
 import route from "./routes/userRoutes.js";
+import jwtRoutes from "./routes/jwtRoutes.js";
 
 const app = express();
 app.use(cors());
@@ -28,3 +29,4 @@ mongoose
 .catch((error) => console.log(error));
 
 app.use("/api/Books", route);
+app.use("/api/users", jwtRoutes);

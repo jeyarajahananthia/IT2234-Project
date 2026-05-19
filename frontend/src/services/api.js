@@ -4,14 +4,63 @@ const API = axios.create({
   baseURL: "http://localhost:8000/api/books",
 });
 
-export const getBooks = () => API.get("/getallbooks");
+// Function to get token from localStorage
+const getToken = () => {
+  return localStorage.getItem("token");
+};
 
-export const addBook = (bookData) => API.post("/create", bookData);
+// ======================
+// PUBLIC ROUTES
+// ======================
 
-export const updateBook = (id, bookData) =>
-  API.put(`/update/${id}`, bookData);
+// Get all books
+export const getBooks = () => {
+  return API.get("/getallbooks");
+};
 
-export const deleteBook = (id) => API.delete(`/delete/${id}`);
+// Search books
+export const searchBook = (bookName) => {
+  return API.get(`/search?bookName=${bookName}`);
+};
 
-export const searchBook = (bookName) =>
-  API.get(`/search?bookName=${bookName}`);
+// ======================
+// PROTECTED ROUTES
+// ======================
+
+// Add book
+export const addBook = (bookData) => {
+  return API.post(
+    "/create",
+    bookData,
+    {
+      headers: {
+        Authorization: getToken(),
+      },
+    }
+  );
+};
+
+// Update book
+export const updateBook = (id, bookData) => {
+  return API.put(
+    `/update/${id}`,
+    bookData,
+    {
+      headers: {
+        Authorization: getToken(),
+      },
+    }
+  );
+};
+
+// Delete book
+export const deleteBook = (id) => {
+  return API.delete(
+    `/delete/${id}`,
+    {
+      headers: {
+        Authorization: getToken(),
+      },
+    }
+  );
+};
